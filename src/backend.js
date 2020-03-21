@@ -18,7 +18,7 @@ const mongo = require('mongodb').MongoClient
 const dbUrl = 'mongodb://localhost/ufrj'
     mongo.connect(dbUrl, function (err, client) {
     if (err) return console.log(err)
-    db = client.db('ufrj').collection("covid19_test")
+    db = client.db('ufrj').collection("covid19")
 
     app.listen(3000, function () {
         console.log('Escutando porta 3000:')

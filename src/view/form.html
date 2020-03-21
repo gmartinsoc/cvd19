@@ -42,8 +42,7 @@
      var xhr = new XMLHttpRequest();
            var url = 'http://'+window.location.host+"/cadastrar?json="+JSON.stringify(json)
            xhr.open("POST", url, false) 
-           xhr.send();
-                  console.log(xhr.responseText)
+           xhr.send()
                if(xhr.responseText=="200"){
                      alert("Respostas salvas!")
                      window.location.href=="/"
@@ -63,7 +62,7 @@
       <label>
          <span onclick="window.location.href='/'" class="fas fa-home" style="cursor: pointer;font-size:2em;margin-left:1em; color:black;"></span>	
          <img style="margin-left:5em;" src= "/logoufrj" /> 
-         <img style="margin-left:40em;" src="/logocorona"/>
+         <img style="margin-left:30em;" src="/logocorona"/>
      </label>
      <br>
       
