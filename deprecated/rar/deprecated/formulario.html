@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Formulário</title>
+  <link src="https://ajax.googleapis.com/ajax/libs/jqueremaily/3.1.0/jquery.min.js"> </link>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+  <link src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></link>
+
+  <script>
+   var json={}
+
+   function verificaPreenchimmento(json){
+        if(json.hasOwnProperty('datanotificacao') && json.hasOwnProperty('cartaosus') && json.hasOwnProperty('cpf') && json.hasOwnProperty('nomepaciente') && json.hasOwnProperty('sexo') && json.hasOwnProperty('datanascimento') && json.hasOwnProperty('idade') && json.hasOwnProperty('nomemae') && json.hasOwnProperty('nacionalidade') && json.hasOwnProperty('paisresidencia') && json.hasOwnProperty('endereco') && json.hasOwnProperty('cep') && json.hasOwnProperty('dataprimeirosintoma') && json.hasOwnProperty('sintomasapre') && json.hasOwnProperty('sinaisclinicos') && json.hasOwnProperty('morbidade') && json.hasOwnProperty('hospitalizado') && json.hasOwnProperty('SituacaoSaude') && json.hasOwnProperty('coleta') && json.hasOwnProperty('historicoViagem') && json.hasOwnProperty('contatoSuspeito') && json.hasOwnProperty('contatoConfirmado') && json.hasOwnProperty('unidaDeSaude') && json.hasOwnProperty('Ocupacao') && json.hasOwnProperty('contatoAnimal') && json.hasOwnProperty('origemnotificacao') && json.hasOwnProperty('estadonotificacao') && json.hasOwnProperty('municipionotificacao') && json.hasOwnProperty('nomenotificador') && json.hasOwnProperty('profocup') && json.hasOwnProperty('telefone') && json.hasOwnProperty('email')){
+           return true
+        }
+        else{
+           return false 
+        }
+  }
+
+   function montarReq(obj , checkbox){
+
+        if(checkbox){ 
+           if (!json[obj.name]){
+              json[obj.name]=[obj.value]
+           }else{
+              if (obj.checked){
+                 json[obj.name].push(obj.value)
+              }else{
+                 json[obj.name].splice(json[obj.name].indexOf(obj.value),1)
+              }
+           }             
+        }
+        else{
+           json[obj.name]=obj.value
+        }
+     }
+
+  function jsonSend(){
+
+     if(verificaPreenchimmento(json)){
+     var xhr = new XMLHttpRequest();
+           var url = 'http://'+window.location.host+"/cadastrar?json="+JSON.stringify(json)
+           xhr.open("POST", url, false) 
+           xhr.send();
+           alert("Respostas salvas!")
+        }else{
+           alert("O formulário não está completamente preenchido. Por favor insira as informações faltantes.")
+        }
+     }
+
+</script>
+  
+ </head>
+ <body> 
+  <br/>
+  <div class="container">
+   <h2 text-align="center">Protótipo Ficha de notificação para casos suspeitos e prováveis de Novo Coronavírus (2019-nCoV)</h2>
+   <br/>
+    <div class="col-md-6" style="margin:0 auto; float:none;"> 
+     <h3 text-align="center">Identificação do paciente:</h3>
+     <br/>
+
+     <div class="form-group">
+        <label>Data de notificação:</label>
+        <input type="date" id="datanotificacao" name="datanotificacao" class="form-control" placeholder="Ex:01/12/2000" onchange="montarReq(this,false)"/>
+     </div>
+     
+     <div class="form-group">
+        <label>Número do cartão SUS (CNS):</label>
+        <input type="number" id="cartaosus" name="cartaosus" class="form-control" placeholder="Ex:111222233334444" onchange="montarReq(this,false)"/>
+     </div>
+
+     <div class="form-group">
+        <label>CPF:</label>
+        <input type="number" id="cpf" name="cpf" class="form-control" placeholder="Ex:13616193761" onchange="montarReq(this,false)" />
+     </div>
+
+     <div class="form-group">
+        <label>Nome completo do paciente:</label>
+        <input type="text" id="nomepaciente" name="nomepaciente" class="form-control" placeholder="Ex:João da Silva" onchange="montarReq(this,false)" />
+     </div>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label>Sexo:
+        <input type="radio" name="sexo" value="masculino" class="checkmark" onchange="montarReq(this,false)"/>Masculino
+        <input type="radio" name="sexo" value="feminino" class="checkmark" onchange="montarReq(this,false)"/>Feminino
+        </label>
+        </ul>
+        </label>
+     </div>
+
+     <div class="form-group">
+        <label>Data de nascimento:</label>
+        <input type="date" name="datanascimento" class="form-control" onchange="montarReq(this,false)"/>
+     </div>
+
+     <div class="form-group">
+        <label>Idade em anos:</label>
+        <input type="number" name="idade" class="form-control" placeholder="Ex:25" onchange="montarReq(this,false)"/>
+     </div>
+
+     <div class="form-group">
+      <label>Nome da mãe:</label>
+      <input type="text" name="nomemae" placeholder="Ex:Maria Rita" class="form-control" onchange="montarReq(this,false)"/>
+     </div>
+
+     <div class="form-group">
+      <label for="nacionalidade">Nacionalidade:</label>
+      <select id="nacionalidade" name="nacionalidade" class="form-control" onchange="montarReq(this,false)">
+        <option ></option>
+        <option >Brasileiro</option>
+        <option >Outro</option>
+      </select>
+     </div>
+
+     <div class="form-group">
+      <label for="paisresidencia">País de residência:</label>
+      <select name="paisresidencia" id="paisresidencia" class="form-control" onchange="montarReq(this,false)">
+        <option ></option>
+        <option >Brasil</option>
+        <option >Outro</option>
+      </select>
+     </div>
+
+     <div class="form-group">
+      <label>Endereço completo:</label>
+      <input type="text" name="endereco" class="form-control" placeholder="Ex:Avenida das Rosas 676 Rio de Janeiro" onchange="montarReq(this,false)" />
+     </div>
+
+     <div class="form-group">
+      <label>CEP residência:</label>
+      <input type="number" name="cep" class="form-control" placeholder="Ex:12345678"  onchange="montarReq(this,false)"/>
+     </div>
+
+     <h3 text-align="center">Dados do caso</h3>
+
+     <div class="form-group">
+        <label>Data dos primeiros sintomas:</label>
+        <input type="date" name="dataprimeirosintoma" class="form-control" value="" onchange="montarReq(this,false)"/>
+     </div>
+
+     <div class="form-group">
+
+        <label>Selecione os sintomas apresentados</label><br>
+        <input type="checkbox" name="sintomasapre" value="Febre" onchange="montarReq(this, true)"/>Febre<br>
+        <input type="checkbox" name="sintomasapre" value="Tosse" onchange="montarReq(this, true)"/>Tosse<br>
+        <input type="checkbox" name="sintomasapre" value="Dor de garganta" onchange="montarReq(this,true)"/>Dor de garganta<br>
+        <input type="checkbox" name="sintomasapre" value="Dificuldade de respirar" onchange="montarReq(this, true)"/>Dificuldade de respirar<br>
+        <input type="checkbox" name="sintomasapre" value="Mialgia/artralgia" onchange="montarReq(this, true)"/>Mialgia/artralgia<br>
+        <input type="checkbox" name="sintomasapre" value="Diarreia" onchange="montarReq(this, true)"/>Diarreia<br>
+        <input type="checkbox" name="sintomasapre" value="Náusea/vômitos" onchange="montarReq(this, true)"/>Náusea/vômitos<br>
+        <input type="checkbox" name="sintomasapre" value="Cefaleia (dor de cabeça" onchange="montarReq(this, true)"/>Cefaleia (dor de cabeça)<br>
+        <input type="checkbox" name="sintomasapre" value="Coriza" onchange="montarReq(this, true)"/>Coriza<br>
+        <input type="checkbox" name="sintomasapre" value="Irritabilidade/confusão" onchange="montarReq(this, true)"/>Irritabilidade/confusão<br>
+        <input type="checkbox" name="sintomasapre" value="Adinamia (fraqueza)" onchange="montarReq(this, true)"/>Adinamia (fraqueza)<br>
+        <input type="checkbox" name="sintomasapre" value="Produção de escarro" onchange="montarReq(this, true)"/>Produção de escarro<br>
+        <input type="checkbox" name="sintomasapre" value="Calafrios" onchange="montarReq(this, true)"/>Calafrios<br>
+        <input type="checkbox" name="sintomasapre" value="Congestão nasal" onchange="montarReq(this, true)"/>Congestão nasal<br>
+        <input type="checkbox" name="sintomasapre" value="Congestão conjuntival" onchange="montarReq(this, true)"/>Congestão conjuntival<br>
+        <input type="checkbox" name="sintomasapre" value="Dificuldade para deglutir" onchange="montarReq(this, true)"/>Dificuldade para deglutir<br>
+        <input type="checkbox" name="sintomasapre" value="Manchas vermelhas pelo corpo" onchange="montarReq(this, true)"/>Manchas vermelhas pelo corpo<br>
+        <input type="checkbox" name="sintomasapre" value="Gânglios linfáticos aumentados" onchange="montarReq(this, true)"/>Gânglios linfáticos aumentados<br>
+        <input type="checkbox" name="sintomasapre" value="Batimento das asas nasais" onchange="montarReq(this, true)"/>Batimento das asas nasais<br>
+        <input type="checkbox" name="sintomasapre" value="Outros" onchange="montarReq(this, true)"/>Outros<br>
+     </div>
+
+     <div class="form-group">
+        <label>Selecione os sinais clínicos observados</label><br>
+        <input type="checkbox" name="sinaisclinicos" value="Febre" onchange="montarReq(this, true)"/>Febre<br>
+        <input type="checkbox" name="sinaisclinicos" value="Exsudato faríngeo" onchange="montarReq(this, true)" />Exsudato faríngeo<br>
+        <input type="checkbox" name="sinaisclinicos" value="Convulsão" onchange="montarReq(this, true)" />Convulsão<br>
+        <input type="checkbox" name="sinaisclinicos" value="Conjuntivite" onchange="montarReq(this, true)" />Conjuntivite<br>
+        <input type="checkbox" name="sinaisclinicos" value="Coma" onchange="montarReq(this, true)" />Coma<br>
+        <input type="checkbox" name="sinaisclinicos" value="Dispneia/Taquipneia" onchange="montarReq(this, true)" />Dispneia/Taquipneia<br>
+        <input type="checkbox" name="sinaisclinicos" value="Alteração de ausculta pulmonar" onchange="montarReq(this, true)" />Alteração de ausculta pulmonar<br>
+        <input type="checkbox" name="sinaisclinicos" value="Alteração na radiologia de tórax" onchange="montarReq(this, true)" />Alteração na radiologia de tórax<br>
+        <input type="checkbox" name="sinaisclinicos" value="Outros" onchange="montarReq(this, true)" />Outros<br>
+     </div>
+
+     <div class="form-group">
+        <label>Morbidades prévias (selecionar todas morbidades pertinentes):</label><br>
+        <input type="checkbox" name="morbidade" value="Doença cardiovascular, incluindo hipertensão" onchange="montarReq(this, true)" />Doença cardiovascular, incluindo hipertensão<br>
+        <input type="checkbox" name="morbidade" value="Diabetes" onchange="montarReq(this, true)" />Diabetes<br>
+        <input type="checkbox" name="morbidade" value="Doença hepática" onchange="montarReq(this, true)" />Doença hepática<br>
+        <input type="checkbox" name="morbidade" value="Doença neurológica crônica ou neuromuscular" onchange="montarReq(this, true)" />Doença neurológica crônica ou neuromuscular<br>
+        <input type="checkbox" name="morbidade" value="Imunodeficiência" onchange="montarReq(this, true)" />Imunodeficiência<br>
+        <input type="checkbox" name="morbidade" value="Infecção pelo HIV" onchange="montarReq(this, true)" />Infecção pelo HIV<br>
+        <input type="checkbox" name="morbidade" value="Doença renal" onchange="montarReq(this, true)" />Doença renal<br>
+        <input type="checkbox" name="morbidade" value="Doença pulmonar crônica" onchange="montarReq(this, true)" />Doença pulmonar crônica<br>
+        <input type="checkbox" name="morbidade" value="Neoplasia (tumor sólido ou hematológico)" onchange="montarReq(this, true)" />Neoplasia (tumor sólido ou hematológico)<br>
+      </div>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label>Paciente foi hospitalizado?
+        <input type="radio" name="hospitalizado" value="Sim" onchange="montarReq(this,false)">Sim
+        <input type="radio" name="hospitalizado" value="Nao" onchange="montarReq(this,false)"/>Não
+        <input type="radio" name="hospitalizado" value="Nao sabe" onchange="montarReq(this,false)"/>Não sabe
+        </label>
+        </ul>
+        <label>
+     </div>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label >Situação de saúde do paciente no momento da notificação:<br>
+        <input type="radio" name="SituacaoSaude" value="Óbito" onchange="montarReq(this,false)"/>Óbito<br>
+        <input type="radio" name="SituacaoSaude" value="Cura" onchange="montarReq(this,false)" />Cura<br>
+        <input type="radio" name="SituacaoSaude" value="Sintomático" onchange="montarReq(this,false)"/>Sintomático<br>
+        <input type="radio" name="SituacaoSaude" value="Ignorado" onchange="montarReq(this,false)"/>Ignorado<br>
+        </label>
+        </ul>
+        </label>
+     </div>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label>Foi realizada coleta de amostra do paciente?
+        <input type="radio" name="coleta" value="Sim" onchange="montarReq(this,false)"/>Sim
+        <input type="radio" name="coleta" value="Nao" onchange="montarReq(this,false)"/>Não
+        <input type="radio" name="coleta" value="Nao sabe" onchange="montarReq(this,false)"/>Não sabe
+        </label>
+        </ul>
+        </label>
+     </div>
+
+     <h3 text-align="center">Dados de exposição e viagens</h3>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label>Paciente tem histórico de viagem para fora do Brasil até 14 dias antes do início dos sintomas?<br>
+        <input type="radio" name="historicoViagem" value="Sim" onchange="montarReq(this,false)"/>Sim
+        <input type="radio" name="historicoViagem" value="Nao" onchange="montarReq(this,false)"/>Não
+        <input type="radio" name="historicoViagem" value="Nao sabe" onchange="montarReq(this,false)"/>Não sabe
+        </label>
+        </ul>
+        </label>
+     </div>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label>O paciente teve contato próximo com uma pessoa que seja caso SUSPEITO de Novo Coronavírus (2019-nCoV)?<br>
+        <input type="radio" name="contatoSuspeito" value="Sim" onchange="montarReq(this,false)"/>Sim
+        <input type="radio" name="contatoSuspeito" value="Nao"onchange="montarReq(this,false)"/>Não
+        <input type="radio" name="contatoSuspeito" value="Nao sabe" onchange="montarReq(this,false)"/>Não sabe
+        </label>
+        </ul>
+        </label>
+     </div>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label>O paciente teve contato próximo com uma pessoa que seja caso CONFIRMADO de Novo Coronavírus (2019-nCoV)?<br>
+        <input type="radio" name="contatoConfirmado" value="Sim" onchange="montarReq(this,false)"/>Sim        
+        <input type="radio" name="contatoConfirmado" value="Nao" onchange="montarReq(this,false)"/>Não
+        <input type="radio" name="contatoConfirmado" value="Nao sabe " onchange="montarReq(this,false)" />Não sabe
+        </label>
+        </ul>
+        </label>
+     </div>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label>Esteve em alguma unidade de saúde nos 14 dias antes do início dos sintomas?<br>
+        <input type="radio" name="unidaDeSaude" value="Sim"onchange="montarReq(this,false)"/>Sim 
+        <input type="radio" name="unidaDeSaude" value="Nao"onchange="montarReq(this,false)"/>Não
+        <input type="radio" name="unidaDeSaude" value="Nao sabe"onchange="montarReq(this,false)"/>Não sabe
+        </label>
+        </ul>
+        </label>
+     </div>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label>Ocupação do caso suspeito:</label><br>
+        <input type="radio" name="Ocupacao" onchange="montarReq(this,false)" value="Profissional de saúde"/>Profissional de saúde<br>
+        <input type="radio" name="Ocupacao" onchange="montarReq(this,false)" value="Estudante da área de saúde"/>Estudante da área de saúde<br>
+        <input type="radio" name="Ocupacao" onchange="montarReq(this,false)" value="Profissional de laboratório"/>Profissional de laboratório<br>
+        <input type="radio" name="Ocupacao" onchange="montarReq(this,false)" value="Trabalha em contato com animais"/>Trabalha em contato com animais<br> 
+        <input type="radio" name="Ocupacao" value="Outros" onchange="montarReq(this,false)"/>Outros<br>
+        </label>
+        </ul>
+        </label>
+     </div>
+
+     <div class="checkmark">
+        <label>
+        <ul>
+        <label>Teve contato com animais em áreas afetadas?
+        <input type="radio" name="contatoAnimal" value="Sim" onchange="montarReq(this,false)"/>Sim
+        <input type="radio" name="contatoAnimal" value="Nao" onchange="montarReq(this,false)"/>Não
+        <input type="radio" name="contatoAnimal"value="Nao sabe" onchange="montarReq(this,false)" />Não sabe
+        </label>
+        </ul>
+        </label>
+     </div>
+
+     <h3 text-align="center">Identificação da unidade notificadora:</h3>
+
+     <div class="form-group">
+      <label for="origemnotificacao">Origem da notificação:</label>
+      <select id="origemnotificacao" name="origemnotificacao" class="form-control" onchange="montarReq(this,false)">
+        <option value=""></option>
+        <option value="Secretaria Estadual de Saúde (vigilância)">Secretaria Estadual de Saúde (vigilância)</option>
+        <option value="Secretaria Municipal de Saúde (vigilância)">Secretaria Municipal de Saúde (vigilância)</option>
+        <option value="Serviço de saúde pública">Serviço de saúde pública</option>
+        <option value="Serviço de saúde privada">Serviço de saúde privada</option>
+        <option value="Profissional de saúde autônomo">Profissional de saúde autônomo</option>
+        <option value="Laboratório público">Laboratório público</option>
+        <option value="Laboratório privado">Laboratório privado</option>
+        <option value="População">População</option>
+        <option value="Outra">Outra</option>
+      </select>
+     </div>
+
+     <div class="form-group">
+      <label for="estadonotificacao">Estado de notificação (UF)?</label>
+      <select id="estadonotificacao" name="estadonotificacao" class="form-control" onchange="montarReq(this,false)">
+        <option value=""></option>
+        <option value="AC">AC</option>
+        <option value="AL">AL</option>
+        <option value="AM">AM</option>
+        <option value="AP">AP</option>
+        <option value="BA">BA</option>
+        <option value="CE">CE</option>
+        <option value="DF">DF</option>
+        <option value="ES">ES</option>
+        <option value="GO">GO</option>
+        <option value="MA">MA</option>
+        <option value="MG">MG</option>
+        <option value="MS">MS</option>
+        <option value="MT">MT</option>
+        <option value="PA">PA</option>
+        <option value="PB">PB</option>
+        <option value="PE">PE</option>
+        <option value="PI">PI</option>
+        <option value="PR">PR</option>
+        <option value="RJ">RJ</option>
+        <option value="RN">RN</option>
+        <option value="RO">RO</option>
+        <option value="RR">RR</option>
+        <option value="RS">RS</option>
+        <option value="SC">SC</option>
+        <option value="SE">SE</option>
+        <option value="SP">SP</option>
+        <option value="TO">TO</option>
+      </select>
+     </div>
+
+     <div class="form-group">
+      <label>Município de notificação</label>
+      <input type="text" name="municipionotificacao" class="form-control" placeholder="Ex:Rio de Janeiro" value="" onchange="montarReq(this,false)"/>
+     </div>
+
+     <div class="form-group">
+      <label>Nome do notificador:</label>
+      <input type="text" name="nomenotificador" class="form-control" placeholder="Ex:Maria Helena Soares" value="" onchange="montarReq(this,false)" />
+     </div>
+
+     <div class="form-group">
+      <label>Profissão ou ocupação:</label>
+      <input type="text" name="profocup" class="form-control" placeholder="Ex:Engenheiro civil" value="" onchange="montarReq(this,false)" />
+     </div>
+
+     <div class="form-group">
+      <label>Telefone de contato do notificador/unidade notificante:</label>
+      <input type="tel" name="telefone" class="form-control" placeholder="Ex:21987654321" pattern="[0-9]{2}[0-9]{5}[0-9]{4}" value="" onchange="montarReq(this,false)"/>
+     </div>
+
+     <div class="form-group">
+      <label>E-mail do notificador/unidade notificadora:</label>
+      <input type="email" name="email" class="form-control" placeholder="Ex:ricardomarques@gmail.com" value="" onchange="montarReq(this,false)" />
+     </div>
+
+     <form method="post" id="form" action="/bubu" value="{}">
+      <div class="form-group" text-align="center">
+
+            <input type="button" name="submeter" class="btn btn-info"  value="Submeter" onclick="jsonSend()" />
+            <input type="button" name="mapa" class="btn btn-info"  value="Mapa" onclick="window.location.href='/ocorrencias'" />
+
+         </div>
+      </form>
+   </div>
+  </div>
+ </body>
+</html>

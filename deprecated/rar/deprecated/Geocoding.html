@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Mapa Covid19 UFRJ</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <style>
+    #map {
+      height: 100%;
+    }
+
+    html,
+    body {
+      height: 100%;
+      padding-top: 1em;
+    }
+
+    .container {
+      left: 10px;
+      max-width: 95%;
+      height: 30em;
+      border: 2px solid #000000;
+      padding: 2px;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class='container'>
+    <div id="map"></div>
+  </div>
+  <div>
+    </br>
+    <input style="margin-left: 45%;" text-align="center" value="Home" background-color="blue" type="button" />
+  </div>
+  <script>
+    function Geocoding(map, locations) {
+
+      var geocoder = new google.maps.Geocoder();
+      var marker, count, endereco;
+      var x = 0
+      for (count = 0; count < locations.length; count++) {
+        endereco = locations[x];
+        geocoder.geocode({ address: endereco }, function (results, status) {
+          if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+        x++;
+      }
+    }
+
+    function initMap() {
+
+      var xhr = new XMLHttpRequest();
+      var url = 'http://' + window.location.host + '/ocorrencias/data'
+      xhr.open("GET", url, true)
+      xhr.onload = function (e) {
+        var enderecos = JSON.parse(xhr.response).data
+        var center = { lat: -22.8576, lng: -43.2004 };
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: center
+        });
+        Geocoding(map, enderecos);
+      }
+      xhr.send();
+    }
+
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy5sPPL58np_vCYP9laO4QbJdH3WT71tc&callback=initMap">
+    </script>
+</body>
+
+</html>
