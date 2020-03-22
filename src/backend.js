@@ -18,7 +18,7 @@ const mongo = require('mongodb').MongoClient
 const dbUrl = 'mongodb://localhost/ufrj'
     mongo.connect(dbUrl, function (err, client) {
     if (err) return console.log(err)
-    db = client.db('ufrj').collection("covid19")
+    db = client.db('ufrj').collection("covid19_test")
 
     app.listen(3000, function () {
         console.log('Escutando porta 3000:')
@@ -36,6 +36,15 @@ const dbUrl = 'mongodb://localhost/ufrj'
       app.get("/logolab", (req, res) => {
         res.sendFile(__dirname+"/assets/logolab.jpg");
       });
+
+      app.get("/logocoppe.jpg", (req, res) => {
+        res.sendFile(__dirname+"/assets/logocoppe.jpg");
+      });
+
+      app.get("/logonce.png", (req, res) => {
+        res.sendFile(__dirname+"/assets/logonce.png");
+      });
+
     app.get('/', function (req, res) {
         res.sendFile(__dirname + '/view/home.html');
         });
