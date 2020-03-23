@@ -9,6 +9,25 @@
   <script>
    var json={}
 
+   function vericaCep(obj,checkbox){
+         montarReq(obj,checkbox)//mantendo o padrao de montagem (precisa ser revisto)
+         //gambiarra do cep aqui
+         //https://viacep.com.br/ws/20765171/json/
+         let cep = new XMLHttpRequest();
+           let url = 'https://viacep.com.br/ws/'+obj.value+'/json/'
+           cep.open("get", url, false) 
+           cep.send();
+           valid=JSON.parse(cep.responseText)
+           //cast json
+           if(valid.logradouro){
+             e=document.getElementById("endereco")
+             e.value= valid.logradouro +","+valid.bairro+"," + valid.uf
+             e.disabled=true
+             montarReq(e,checkbox)//mantendo o padrao de montagem (precisa ser revisto)
+           }
+         
+   }
+
    function verificaPreenchimmento(json){
         if(json.hasOwnProperty('datanotificacao') && json.hasOwnProperty('cartaosus') && json.hasOwnProperty('cpf') && json.hasOwnProperty('nomepaciente') && json.hasOwnProperty('sexo') && json.hasOwnProperty('datanascimento') && json.hasOwnProperty('idade') && json.hasOwnProperty('nomemae') && json.hasOwnProperty('nacionalidade') && json.hasOwnProperty('paisresidencia') && json.hasOwnProperty('endereco') && json.hasOwnProperty('cep') && json.hasOwnProperty('dataprimeirosintoma') && json.hasOwnProperty('sintomasapre') && json.hasOwnProperty('sinaisclinicos') && json.hasOwnProperty('morbidade') && json.hasOwnProperty('hospitalizado') && json.hasOwnProperty('SituacaoSaude') && json.hasOwnProperty('coleta') && json.hasOwnProperty('historicoViagem') && json.hasOwnProperty('contatoSuspeito') && json.hasOwnProperty('contatoConfirmado') && json.hasOwnProperty('unidaDeSaude') && json.hasOwnProperty('Ocupacao') && json.hasOwnProperty('contatoAnimal') && json.hasOwnProperty('origemnotificacao') && json.hasOwnProperty('estadonotificacao') && json.hasOwnProperty('municipionotificacao') && json.hasOwnProperty('nomenotificador') && json.hasOwnProperty('profocup') && json.hasOwnProperty('telefone') && json.hasOwnProperty('email')){
            return true
@@ -19,6 +38,7 @@
   }
 
    function montarReq(obj , checkbox){
+
 
         if(checkbox){ 
            if (!json[obj.name]){
@@ -37,15 +57,15 @@
      }
 
   function jsonSend(){
-
+   
      if(verificaPreenchimmento(json)){
      var xhr = new XMLHttpRequest();
            var url = 'http://'+window.location.host+"/cadastrar?json="+JSON.stringify(json)
            xhr.open("POST", url, false) 
-           xhr.send()
+           xhr.send();
                if(xhr.responseText=="200"){
                      alert("Respostas salvas!")
-                     window.location.href=="/"
+                     window.location.href="/"
                }else if(xhr.responseText=="401"){
                      alert('Ocorreu um problema, tente novamente')
                }
@@ -58,13 +78,12 @@
   
  </head>
  <body> 
-   <div style="align-content: center;">
-      <label>
-         <span onclick="window.location.href='/'" class="fas fa-home" style="cursor: pointer;font-size:2em;margin-left:1em; color:black;"></span>	
-         <img style="margin-left:5em;" src= "/logoufrj" /> 
-         <img style="margin-left:30em;" src="/logocorona"/>
-     </label>
-     <br>
+   <div style="display:block ;align-content: center; height: 15%;margin:auto">
+      <label><span onclick="window.location.href='/'" class="fas fa-home" style="cursor: pointer;font-size:2em; color:black;"></span>	
+      <img style="margin-left:1em;" src= "/logoufrj" /> 
+      <img style="margin-left:5em;height: 5em; width: 25em;" src="/logoestadorj"/>
+      <img style="margin-left:6em;" src="/logocorona"/>
+      </label>
       
   <br/>
    <h2 style="color: black; text-align: center;"><b>Ficha de notificação para casos suspeitos e prováveis de Novo Coronavírus (2019-nCoV)</b></h2> 
@@ -140,15 +159,16 @@
       </select>
      </b></div>
 
-     <div class="form-group" style="color: black;"><b>
-      <label>Endereço completo:</label>
-      <input style="color: black;" type="text" name="endereco" class="form-control" placeholder="Ex:Avenida das Rosas 676 Rio de Janeiro" onchange="montarReq(this,false)" />
-     </b></div>
-
      <div class="form-group"><b>
       <label>CEP residência:</label>
-      <input style="color: black;" type="number" name="cep" class="form-control" placeholder="Ex:12345678"  onchange="montarReq(this,false)"/>
+      <input maxlength="8" oninput='return event.charCode >= 48 && event.charCode <= 57' style="color: black;" type="number" name="cep" class="form-control" placeholder="12345678"  onchange="vericaCep(this,false)"/>
      </b></div>
+
+     <div class="form-group" style="color: black;"><b>
+      <label>Endereço completo:</label>
+      <input style="color: black;" type="text" id="endereco" name="endereco" class="form-control" placeholder="Ex:Avenida das Rosas 676 Rio de Janeiro" onchange="montarReq(this,false)" />
+     </b></div>
+
      <br>
      <h3 text-align="center" style="color: black;"><b>Dados do caso:</b></h3>
      <br>
@@ -412,10 +432,12 @@
    </div>
   </div>
   <br/>
-  <div style="color: grey; font-size: medium; margin-left: 3%;"><b>
-     Desenvolvido por:
-     <img src="/logolab" style="margin-left:1%; width: 5%;"/>
-   </b></div>
-   <br/>
+  <footer style="color: grey;font-size:medium;padding: 0 3%; height: 20px;">
+   <img src="/logonce" style="max-height: 3em;"/>
+   <img src="/logocoppe" style="max-height: 2.75em; margin-left: 1%;"/>
+   <span style="float:right"><b>Desenvolvido por:</b>
+   <img src="/logolab" style="max-height: 2.75em;"/></span>
+</footer>
+
  </body>
 </html>

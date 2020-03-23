@@ -18,7 +18,7 @@ const mongo = require('mongodb').MongoClient
 const dbUrl = 'mongodb://localhost/ufrj'
     mongo.connect(dbUrl, function (err, client) {
     if (err) return console.log(err)
-    db = client.db('ufrj').collection("covid19")
+    db = client.db('ufrj').collection("covid19_test1")
 
     app.listen(3000, function () {
         console.log('Escutando porta 3000:')
@@ -26,6 +26,16 @@ const dbUrl = 'mongodb://localhost/ufrj'
     })
 
 //roteamento
+
+    app.get("/logoestadorj", (req, res) => {
+      res.sendFile(__dirname+"/assets/logoestadorj.jpg");
+    });
+    app.get("/logonce", (req, res) => {
+      res.sendFile(__dirname+"/assets/logonce.png");
+    });
+    app.get("/logocoppe", (req, res) => {
+      res.sendFile(__dirname+"/assets/logocoppe.jpg");
+    });
 
     app.get("/logoufrj", (req, res) => {
         res.sendFile(__dirname+"/assets/logoufrj.jpg");
@@ -63,6 +73,7 @@ const dbUrl = 'mongodb://localhost/ufrj'
                         data[result[cont].SituacaoSaude]=[result[cont].coords]                  
                     }
                     else if (data[result[cont].SituacaoSaude]){
+                        //montar req e viacep
                         data[result[cont].SituacaoSaude].push(result[cont].coords)                
                     }
                 }
@@ -71,17 +82,16 @@ const dbUrl = 'mongodb://localhost/ufrj'
         });
     });
 
-
     app.post('/cadastrar', function (req, res) {
         try {
            var obj = req.query.json
             obj = JSON.parse(obj.toString())
             obj['coords']="nPreenchido"
             //pegando coords
-            geocoder.geocode(obj.endereco)
+            geocoder.geocode(obj.endereco+","+obj.cep)
                         .then(function(geo) {
                                     obj['coords']=[geo[0].latitude,geo[0].longitude]
-                                    console.log(obj)
+                                    //console.log(obj)
                                     db.insertOne(obj)
                                     res.send("200")
                             })
