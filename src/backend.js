@@ -45,6 +45,10 @@ const dbUrl = 'mongodb://localhost/ufrj'
         res.sendFile(__dirname+"/assets/logonce.png");
       });
 
+      app.get("/logoestadorj.jpg", (req, res) => {
+        res.sendFile(__dirname+"/assets/logoestadorj.jpg");
+      });
+
     app.get('/', function (req, res) {
         res.sendFile(__dirname + '/view/home.html');
         });
