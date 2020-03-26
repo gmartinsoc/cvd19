@@ -18,6 +18,8 @@ services:
             - ./src:/usr/src/app/src
         ports:
             - "80:3000"
+        environment: 
+            - "MONGO_CONNECTION_STR=mongodb://root:MongoDB2019!@192.168.99.100:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false"
         links:
             - mongo
         networks:
