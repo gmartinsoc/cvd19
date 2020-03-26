@@ -31,6 +31,30 @@ optionally you can change internal container port with the environment variable 
 docker run -p 80:12345 -e "PORT=12345" <you-user-name>/node-web-app
 ```
 
+or set the database connection string
+
+```bash
+docker run -p 80:12345 -e "MONGO_CONNECTION_STR=mongodb://user:password@host:port" <you-user-name>/node-web-app
+```
+
+### Using docker-compose
+
+Edit `docker-compose.yml` file, and run on shell:
+
+
+```bash
+docker-compose build && docker-compose up
+```
+
+
+
+## Todo
+
+- [ ] Set restart policy
+- [ ] Protect secrets
+- [ ] Protect database access
+- [ ] Set monitoring tools
+
 
 
 ## Reference
