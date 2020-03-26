@@ -38,31 +38,6 @@ exports.get = (req, res, next) => {
     });
 }
 
-// app.get('/ocorrencias/dashboard/data', function (req, res) {
-
-    exports.get = (req, res, next) => {
-        
-        //console.log(req.query.situacao)
-        res.database.find({}, { coords: 1, _id: 0 } ).toArray(function (err, result) {
-            //console.log("end  "+ JSON.stringify(result[1]))
-            if (err) throw err;
-
-            console.log(result)
-            /*for (cont = 0; cont < Object.keys(result).length; cont++) {
-                if(result[cont].coords != null  && (result[cont].coords != "nPreenchido" && result[cont].SituacaoSaude != "nPreenchido") && (situacao == 'todos' || result[cont].SituacaoSaude == situacao)){
-                     if (!data[result[cont].SituacaoSaude]){
-                        data[result[cont].SituacaoSaude]=[result[cont].coords]                  
-                    }
-                    else if (data[result[cont].SituacaoSaude]){
-                        //montar req e viacep
-                        data[result[cont].SituacaoSaude].push(result[cont].coords)                
-                    }
-                }
-            }*/
-            res.json({ data });
-        });
-    }
-
 // app.post('/cadastrar', function (req, res) {
 exports.post = (req, res, next) => {
     try {
