@@ -6,10 +6,8 @@ const router = express.Router();
 
 const controller = require('../controllers/OcorrenciasController')
 
-const connectDB = require('../database').connectDB
-
-router.get('/ocorrencias/data', connectDB, controller.get);
-router.post('/cadastrar', connectDB, controller.post);
+router.get('/ocorrencias/data', controller.get);
+router.post('/cadastrar', controller.post);
 
 
 

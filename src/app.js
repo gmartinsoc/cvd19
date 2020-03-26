@@ -25,9 +25,10 @@ app.use("/assets", express.static(static_path) )
 // CALL ROUTERS FUNCTION
 const index = require('./routes/index');
 const APIRoute = require('./routes/APIRoute');
+const connectDB = require('./database/database').connectDB
 
 app.use('/', index);
-app.use('/api', APIRoute);
+app.use('/api',connectDB, APIRoute);
 
 
 
