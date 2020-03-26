@@ -1,0 +1,66 @@
+/************* GERAL *************/
+
+body {
+	 background-image: linear-gradient(#A6AFBF, #dce8fe, #A6AFBF);
+	 background-attachment: fixed;
+	 background-repeat: no-repeat;
+}
+
+main .container{
+	padding: 2em;
+	margin: 1em auto;
+}
+
+.header .row, .footer .row{
+	width: 100%;
+	padding: 0.5em;
+}
+
+.header img, .footer img{
+	max-height: 80px;
+}
+
+.header{
+	font-size: 2em;
+	text-align: center;
+}
+
+.footer{
+	font-size: 1.5em;
+}
+
+/************* PAGINA HOME *************/
+
+.home {
+	padding: 10% 0!important;
+	background-color: transparent!important;
+}
+
+.home .row{
+	font-size: 3em;
+}
+
+/************* PAGINA FORM *************/
+.formulario .form-check-inline {
+	margin-bottom: 1em;
+}
+
+/************* PAGINA MAPA *************/
+.mapa .form-check-inline .form-check-label {
+	margin-left: 0.3em;
+}
+
+.mapa .form-check-input {
+	margin: 0;
+}
+
+.mapa .container_mapa {
+	height: 35em;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+.mapa .container_mapa #map {
+	height: 100%;
+}

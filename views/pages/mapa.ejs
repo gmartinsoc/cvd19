@@ -1,0 +1,186 @@
+
+		<div class="container bg-light mapa">
+			<div class="row">
+				<div class="col-12">
+					<h4>Mapeamento de ocorrências do Novo Coronavírus (2019-nCoV) no estado do Rio de Janeiro</h4>
+				</div>
+			</div>
+
+			<br/>
+
+			<div class="row">
+					<div class="form-check form-check-inline col-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text">
+								<input checked type="radio" name="sitSelecionada" id="sel_todos" value="todos" onclick="Restart(this.value)">
+							</div>
+						</div>
+						<label class="form-check-label" for="sel_todos">Todos</label>
+					</div>
+
+					<div class="form-check form-check-inline col-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text bg-dark">
+								<input type="radio" name="sitSelecionada" id="sel_obitos" value="Obito" class="form-check-input" onclick="Restart(this.value)">
+							</div>
+						</div>
+						<label class="form-check-label" for="sel_obitos">Óbito</label>
+					</div>
+
+					<div class="form-check form-check-inline col-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text bg-success">
+								<input type="radio" name="sitSelecionada" id="sel_cura" value="Cura" class="form-check-input" onclick="Restart(this.value)">
+							</div>
+						</div>
+						<label class="form-check-label" for="sel_cura">Cura</label>
+					</div>
+
+					<div class="form-check form-check-inline col-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text bg-danger">
+								<input type="radio" name="sitSelecionada" id="sel_sintomatico" value="Sintomatico" class="form-check-input" onclick="Restart(this.value)">
+							</div>
+						</div>
+						<label class="form-check-label" for="sel_sintomatico">Sintomático</label>
+					</div>
+
+					<div class="form-check form-check-inline col-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text bg-primary">
+								<input type="radio" name="sitSelecionada" id="sel_ignorado" value="Ignorado" class="form-check-input" onclick="Restart(this.value)">
+							</div>
+						</div>
+						<label class="form-check-label" for="sel_ignorado">Ignorado</label>
+					</div>
+			</div>
+
+			<br/>
+
+			<div class="row container_mapa">
+				<div class="col-12">
+					<div id="map"></div>
+				</div>
+			</div>
+		</div>
+	
+		<script>
+			var gradientRed = [
+				'rgba(255, 0, 0, 0)',
+				'rgba(255, 0, 0, 0.7)',
+				'rgba(255, 0, 0, 0.8)',
+				'rgba(255, 0, 0, 0.9)',
+				'rgba(255, 0, 0, 1)'
+			]
+	
+			var gradientGreen = [
+				'rgba(0, 255, 0, 0)',
+				'rgba(0, 255, 0, 0.1)',
+				'rgba(0, 255, 0, 0.2)',
+				'rgba(0, 255, 0, 0.3)',
+				'rgba(0, 255, 0, 0.4)',
+				'rgba(0, 255, 0, 0.5)',
+				'rgba(0, 255, 0, 0.6)',
+				'rgba(0, 255, 0, 0.7)',
+				'rgba(0, 255, 0, 0.8)',
+				'rgba(0, 255, 0, 0.9)',
+				'rgba(0, 255, 0, 1)'
+			]
+	
+			var gradientBlue = [
+				'rgba(0, 0, 255, 0)',
+				'rgba(0, 0, 255, 0.1)',
+				'rgba(0, 0, 255, 0.2)',
+				'rgba(0, 0, 255, 0.3)',
+				'rgba(0, 0, 255, 0.4)',
+				'rgba(0, 0, 255, 0.5)',
+				'rgba(0, 0, 255, 0.6)',
+				'rgba(0, 0, 255, 0.7)',
+				'rgba(0, 0, 255, 0.8)',
+				'rgba(0, 0, 255, 0.9)',
+				'rgba(0, 0, 255, 1)'
+			]
+	
+			var gradientBlack = [
+				'rgba(0, 0 , 0, 0)',
+				'rgba(0, 0, 0, 0.1)',
+				'rgba(0, 0, 0, 0.2)',
+				'rgba(0, 0, 0, 0.3)',
+				'rgba(0, 0, 0, 0.4)',
+				'rgba(0, 0, 0, 0.5)',
+				'rgba(0, 0, 0, 0.6)',
+				'rgba(0, 0, 0, 0.7)',
+				'rgba(0, 0, 0, 0.8)',
+				'rgba(0, 0, 0, 0.9)',
+				'rgba(0, 0, 0, 1)'
+			]
+	
+			//var geocoder;
+			var map;
+			var heatmap
+			var situacao='todos'
+	
+			function initMap() {
+				var map = new google.maps.Map(
+					document.getElementById("map"), {
+					center: new google.maps.LatLng(-22.8576, -43.2004),
+					zoom: 10,
+				});
+				var coordinates = [{}];
+				var bounds = new google.maps.LatLngBounds();
+	
+				function getEnderecos() {
+					return new Promise(function (resolve, reject) {
+	
+						var xhr = new XMLHttpRequest();
+						var url = 'http://' + window.location.host + '/api/ocorrencias/data' + '?situacao=' + situacao
+						xhr.open("GET", url, true)
+						xhr.onload = function (e) {
+							var enderecos = JSON.parse(xhr.response).data
+							
+							resolve(enderecos)  
+							
+	
+						}
+						xhr.send();
+					})
+				}
+				getEnderecos()
+					.then(function (enderecos) {
+						features={Cura:gradientGreen,Obito:gradientBlack,Ignorado:gradientBlue,Sintomatico:gradientRed}
+						Object.keys(enderecos).forEach( (item) => {
+							var addressData = []
+	
+							enderecos[item].forEach( (location) => {
+								lat = location[0]
+								long= location[1]
+								//addressData.push(new google.maps.LatLng(parseFloat(location[0]),parseFloat(location[1]))) 
+								addressData.push(new google.maps.LatLng(lat,long))  
+							})
+							heatmap = new google.maps.visualization.HeatmapLayer({
+										data: addressData,
+										radius: 10,
+										dissipating: true,
+										opacity:1,
+										gradient: features[item]
+							})
+							heatmap.setMap(map)
+						})
+						
+					})
+			}
+			
+			function Restart(sitSelecionada) {
+				situacao=sitSelecionada
+				map = new google.maps.Map(
+					document.getElementById("map"), {
+					center: new google.maps.LatLng(-22.8576, -43.2004),
+					zoom: 10,
+				})
+				initMap()
+					
+			}
+		</script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy5sPPL58np_vCYP9laO4QbJdH3WT71tc&libraries=places,visualization&callback=initMap"></script>
+
+

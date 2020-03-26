@@ -1,0 +1,670 @@
+<div class="container bg-light formulario">
+	<div class="row">
+		<div class="col-12">
+			<h4>Ficha de notificação para casos suspeitos e prováveis de Novo Coronavírus (2019-nCoV)</h4>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+	<div class="row">
+		<!-- IDENTIFICACAO PACIENTE -->
+		<div class="col-12">
+			<h5>Identificação do Paciente</h5>
+		</div>
+
+		<br />
+		<br />
+
+		<div class="col-6">
+			<div class="form-group">
+				<label for="nomepaciente">Nome completo do paciente:</label>
+				<input type="text" id="nomepaciente" name="nomepaciente" class="form-control"
+					placeholder="Ex:João da Silva" onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="nomemae">Nome da mãe:</label>
+				<input type="text" name="nomemae" id="nomemae" placeholder="Ex:Maria Rita" class="form-control"
+					onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="idade">Idade em anos:</label>
+				<input type="number" name="idade" id="idade" class="form-control" placeholder="Ex:25"
+					onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="cpf">CPF:</label>
+				<input type="number" id="cpf" name="cpf" class="form-control" placeholder="Ex:13616193761"
+					onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="datanascimento">Data de nascimento:</label>
+				<input type="date" name="datanascimento" id="datanascimento" class="form-control"
+					onchange="montarReq(this,false)" />
+			</div>
+
+
+			<label for="div_sexo">Sexo:</label>
+			<div class="form-group" id="div_sexo">
+				<div class="form-check form-check-inline">
+					<input type="radio" name="sexo" value="masculino" class="form-check-input"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="sexoM">Masculino</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input type="radio" name="sexo" value="feminino" class="form-check-input"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="sexoF">Feminino</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-6">
+
+			<div class="form-group">
+				<label for="datanotificacao">Data de notificação:</label>
+				<input type="date" id="datanotificacao" name="datanotificacao" class="form-control"
+					placeholder="Ex:01/12/2000" onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="cartaosus">Número do cartão SUS (CNS):</label>
+				<input type="number" id="cartaosus" name="cartaosus" class="form-control"
+					placeholder="Ex:111222233334444" onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="cep">CEP residência:</label>
+				<input maxlength="8" oninput="return event.charCode >= 48 && event.charCode <= 57" type="number"
+					name="cep" id="cep" class="form-control" placeholder="12345678" onchange="vericaCep(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="endereco">Endereço completo:</label>
+				<input type="text" id="endereco" name="endereco" class="form-control"
+					placeholder="Ex:Avenida das Rosas 676 Rio de Janeiro" onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="paisresidencia">País de residência:</label>
+				<select name="paisresidencia" id="paisresidencia" class="form-control" onchange="montarReq(this,false)">
+					<option></option>
+					<option>Brasil</option>
+					<option>Outro</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="nacionalidade">Nacionalidade:</label>
+				<select id="nacionalidade" name="nacionalidade" class="form-control" onchange="montarReq(this,false)">
+					<option></option>
+					<option>Brasileiro</option>
+					<option>Outro</option>
+				</select>
+			</div>
+		</div>
+	</div> <!-- FIM IDENTIFICACAO PACIENTE -->
+
+	<br />
+	<br />
+
+	<div class="row">
+		<!-- DADOS CASO -->
+		<div class="col-12">
+			<h5>Dados do Caso</h5>
+		</div>
+
+		<div class="col-6">
+			<div class="form-group">
+				<label for="dataprimeirosintoma">Data dos primeiros sintomas:</label>
+				<input type="date" name="dataprimeirosintoma" id="dataprimeirosintoma" class="form-control" value=""
+					onchange="montarReq(this,false)">
+			</div>
+
+			<label for="div_sintomas">Selecione os sintomas apresentados:</label>
+			<div class="form-group" id="div_sintomas">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_febre" value="Febre"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_febre">Febre</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_tosse" value="Tosse"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_tosse">Tosse</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_garganta"
+						value="Dor de garganta" onchange="montarReq(this,true)">
+					<label class="form-check-label" for="sint_garganta">Dor de garganta</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_respirar"
+						value="Dificuldade de respirar" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_respirar">Dificuldade de respirar</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_mialgia"
+						value="Mialgia/artralgia" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_mialgia">Mialgia/artralgia</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_diarreia"
+						value="Diarreia" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_diarreia">Diarreia</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_nausea"
+						value="Náusea/vômitos" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_nausea">Náusea/vômitos</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_cefaleia"
+						value="Cefaleia (dor de cabeça" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_cefaleia">Cefaleia (dor de cabeça)</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_coriza" value="Coriza"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_coriza">Coriza</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_irritabilidade"
+						value="Irritabilidade/confusão" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_irritabilidade">Irritabilidade/confusão</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_adinamia"
+						value="Adinamia (fraqueza)" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_adinamia">Adinamia (fraqueza)</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_escarro"
+						value="Produção de escarro" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="">Produção de escarro</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="" value="Calafrios"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_escarro">Calafrios</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="" value="Congestão nasal"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="">Congestão nasal</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_conjuntival"
+						value="Congestão conjuntival" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_conjuntival">Congestão conjuntival</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_deglutir"
+						value="Dificuldade para deglutir" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_deglutir">Dificuldade para deglutir</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_manchas"
+						value="Manchas vermelhas pelo corpo" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_manchas">Manchas vermelhas pelo corpo</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_ganglios"
+						value="Gânglios linfáticos aumentados" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_ganglios">Gânglios linfáticos aumentados</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_asas"
+						value="Batimento das asas nasais" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_asas">Batimento das asas nasais</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sintomasapre" id="sint_outros" value="Outros"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sint_outros">Outros</label>
+				</div>
+			</div>
+
+			<label for="div_coleta">Foi realizada coleta de amostra do paciente?</label>
+			<div id="div_coleta">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="coleta" value="Sim" id="coleta_sim"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="coleta_sim">Sim</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="coleta" value="Nao" id="coleta_nao"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="coleta_nao">Não</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="coleta" value="Nao sabe" id="coleta_nao_sabe"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="coleta_nao_sabe">Não sabe</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-6">
+			<label for="div_sinaisclinicos">Selecione os sinais clínicos observados:</label>
+			<div class="form-group" id="div_sinaisclinicos">
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sinaisclinicos" id="sinais_febre"
+						value="Febre" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sinais_febre">Febre</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sinaisclinicos" id="sinais_faringeo"
+						value="Exsudato faríngeo" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sinais_faringeo">Exsudato faríngeo</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sinaisclinicos" id="sinais_convulsao"
+						value="Convulsão" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sinais_convulsao">Convulsão</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sinaisclinicos" id="sinais_conjuntivite"
+						value="Conjuntivite" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sinais_conjuntivite">Conjuntivite</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sinaisclinicos" id="sinais_coma" value="Coma"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sinais_coma">Coma</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sinaisclinicos" id="sinais_disp_trap"
+						value="Dispneia/Taquipneia" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sinais_disp_trap">Dispneia/Taquipneia</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sinaisclinicos" id="sinais_pulmonar"
+						value="Alteração de ausculta pulmonar" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sinais_pulmonar">Alteração de ausculta pulmonar</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sinaisclinicos" id="sinais_torax"
+						value="Alteração na radiologia de tórax" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sinais_torax">Alteração na radiologia de tórax</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="sinaisclinicos" id="sinais_outros"
+						value="Outros" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="sinais_outros">Outros</label>
+				</div>
+			</div>
+
+			<label for="div_morbidades">Morbidades prévias (selecionar todas morbidades pertinentes):</label>
+			<div class="form-group" id="div_morbidades">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="morbidade" id="cardiovascular"
+						value="Doença cardiovascular, incluindo hipertensão" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="cardiovascular">Doença cardiovascular, incluindo
+						hipertensão</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="morbidade" id="diabetes" value="Diabetes"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="diabetes">Diabetes</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="morbidade" id="hepatica"
+						value="Doença hepática" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="hepatica">Doença hepática</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="morbidade" id="neuro"
+						value="Doença neurológica crônica ou neuromuscular" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="neuro">Doença neurológica crônica ou neuromuscular</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="morbidade" id="imunodeficiencia"
+						value="Imunodeficiência" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="imunodeficiencia">Imunodeficiência</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="morbidade" id="hiv" value="Infecção pelo HIV"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="hiv">Infecção pelo HIV</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="morbidade" id="renal" value="Doença renal"
+						onchange="montarReq(this, true)">
+					<label class="form-check-label" for="renal">Doença renal</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="morbidade" id="pulmonar"
+						value="Doença pulmonar crônica" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="pulmonar">Doença pulmonar crônica</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="morbidade" id="neoplasia"
+						value="Neoplasia (tumor sólido ou hematológico)" onchange="montarReq(this, true)">
+					<label class="form-check-label" for="neoplasia">Neoplasia (tumor sólido ou hematológico)</label>
+				</div>
+			</div>
+
+			<label for="hospitalizado">Paciente foi hospitalizado?</label>
+			<div id="hospitalizado">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="hospitalizado" value="Sim" id="hosp_sim"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="hosp_sim">Sim</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="hospitalizado" value="Nao" id="hosp_nao"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="hosp_nao">Não</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="hospitalizado" value="Nao sabe"
+						id="hosp_nao_sabe" onchange="montarReq(this,false)">
+					<label class="form-check-label" for="hosp_nao_sabe">Não sabe</label>
+				</div>
+			</div>
+
+			<label for="div_notificacao">Situação de saúde do paciente no momento da notificação:</label>
+			<div id="div_notificacao">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="SituacaoSaude" value="Obito" id="obito"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="obito">Óbito</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="SituacaoSaude" value="Cura" id="cura"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="cura">Cura</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="SituacaoSaude" value="Sintomatico"
+						id="sintomatico" onchange="montarReq(this,false)">
+					<label class="form-check-label" for="sintomatico">Sintomático</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="SituacaoSaude" value="Ignorado" id="ignorado"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="ignorado">Ignorado</label>
+				</div>
+			</div>
+		</div>
+	</div> <!-- FIM DADOS CASO -->
+
+	<br />
+	<br />
+
+	<div class="row">
+		<!-- DADOS EXPOSICAO -->
+		<div class="col-12">
+			<h5>Dados de exposição e viagens:</h5>
+		</div>
+
+		<div class="col-6">
+
+			<label for="div_hist_viagem">Paciente tem histórico de viagem para fora do Brasil até 14 dias antes do
+				início dos sintomas?</label>
+			<div id="div_hist_viagem">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="historicoViagem" id="hist_viagem_sim" value="Sim"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="hist_viagem_sim">Sim</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="historicoViagem" id="hist_viagem_nao" value="Nao"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="hist_viagem_nao">Não</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="historicoViagem" id="hist_viagem_nao_sabe"
+						value="Nao sabe" onchange="montarReq(this,false)">
+					<label class="form-check-label" for="hist_viagem_nao_sabe">Não sabe</label>
+				</div>
+			</div>
+
+			<label for="div_contato_susp">O paciente teve contato próximo com uma pessoa que seja caso SUSPEITO de Novo
+				Coronavírus (2019-nCoV)?</label>
+			<div id="div_contato_susp">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="contatoSuspeito" id="susp_sin" value="Sim"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="susp_sim">Sim</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="contatoSuspeito" id="susp_nao" value="Nao"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="susp_nao">Não</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="contatoSuspeito" id="susp_nao_sabe"
+						value="Nao sabe" onchange="montarReq(this,false)">
+					<label class="form-check-label" for="susp_nao">Não sabe</label>
+				</div>
+			</div>
+
+			<label for="div_contato_conf">O paciente teve contato próximo com uma pessoa que seja caso CONFIRMADO de
+				Novo Coronavírus (2019-nCoV)?</label>
+			<div id="div_contato_conf">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="contatoConfirmado" id="conf_sim" value="Sim"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="conf_sim">Sim</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="contatoConfirmado" id="conf_nao" value="Nao"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="conf_nao">Não</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="contatoConfirmado" id="conf_nao_sabe"
+						value="Nao sabe " onchange="montarReq(this,false)">
+					<label class="form-check-label" for="conf_nao_sabe">Não sabe</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-6">
+
+			<label for="div_pres_unid">Esteve em alguma unidade de saúde nos 14 dias antes do início dos
+				sintomas?</label>
+			<div id="div_pres_unid">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="unidaDeSaude" id="und_sim" value="Sim"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="und_sim">Sim</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="unidaDeSaude" id="und_nao" value="Nao"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="und_nao">Não</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="unidaDeSaude" id="und_nao_sabe" value="Nao sabe"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="und_nao_sabe">Não sabe</label>
+				</div>
+			</div>
+
+			<label for="div_ocup_susp">Ocupação do caso suspeito:</label>
+			<div id="div_ocup_susp">
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="Ocupacao" onchange="montarReq(this,false)"
+						id="prof_saude" value="Profissional de saúde">
+					<label class="form-check-label" for="prof_saude">Profissional de saúde</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="Ocupacao" onchange="montarReq(this,false)"
+						id="est_saude" value="Estudante da área de saúde">
+					<label class="form-check-label" for="est_saude">Estudante da área de saúde</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="Ocupacao" onchange="montarReq(this,false)"
+						id="prof_lab" value="Profissional de laboratório">
+					<label class="form-check-label" for="prof_lab">Profissional de laboratório</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="Ocupacao" onchange="montarReq(this,false)"
+						id="trab_anim" value="Trabalha em contato com animais">
+					<label class="form-check-label" for="trab_anim">Trabalha em contato com animais</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="Ocupacao" id="prof_outros" value="Outros"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="prof_outros">Outros</label>
+				</div>
+			</div>
+
+			<label for="div_cont_anim">Teve contato com animais em áreas afetadas?</label>
+			<div id="div_cont_anim">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="contatoAnimal" id="animais_sim" value="Sim"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="animais_sim">Sim</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="contatoAnimal" id="animais_nao" value="Nao"
+						onchange="montarReq(this,false)">
+					<label class="form-check-label" for="animais_nao">Não</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="contatoAnimal" id="animais_nao_sabe"
+						value="Nao sabe" onchange="montarReq(this,false)">
+					<label class="form-check-label" for="animais_nao_sabe">Não sabe</label>
+				</div>
+			</div>
+		</div>
+	</div> <!-- FIM DADOS CASO -->
+
+	<br />
+	<br />
+
+	<div class="row">
+		<!-- UNID NOTIFICADORA -->
+		<div class="col-12">
+			<h5>Identificação da unidade notificadora:</h5>
+		</div>
+
+		<div class="col-6">
+			<div class="form-group">
+				<label for="origemnotificacao">Origem da notificação:</label>
+				<select id="origemnotificacao" name="origemnotificacao" class="form-control"
+					onchange="montarReq(this,false)">
+					<option value=""></option>
+					<option value="Secretaria Estadual de Saúde (vigilância)">Secretaria Estadual de Saúde (vigilância)
+					</option>
+					<option value="Secretaria Municipal de Saúde (vigilância)">Secretaria Municipal de Saúde
+						(vigilância)</option>
+					<option value="Serviço de saúde pública">Serviço de saúde pública</option>
+					<option value="Serviço de saúde privada">Serviço de saúde privada</option>
+					<option value="Profissional de saúde autônomo">Profissional de saúde autônomo</option>
+					<option value="Laboratório público">Laboratório público</option>
+					<option value="Laboratório privado">Laboratório privado</option>
+					<option value="População">População</option>
+					<option value="Outra">Outra</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="estadonotificacao">Estado de notificação (UF):</label>
+				<select id="estadonotificacao" name="estadonotificacao" class="form-control"
+					onchange="montarReq(this,false)">
+					<option value=""></option>
+					<option value="AC">AC</option>
+					<option value="AL">AL</option>
+					<option value="AM">AM</option>
+					<option value="AP">AP</option>
+					<option value="BA">BA</option>
+					<option value="CE">CE</option>
+					<option value="DF">DF</option>
+					<option value="ES">ES</option>
+					<option value="GO">GO</option>
+					<option value="MA">MA</option>
+					<option value="MG">MG</option>
+					<option value="MS">MS</option>
+					<option value="MT">MT</option>
+					<option value="PA">PA</option>
+					<option value="PB">PB</option>
+					<option value="PE">PE</option>
+					<option value="PI">PI</option>
+					<option value="PR">PR</option>
+					<option value="RJ">RJ</option>
+					<option value="RN">RN</option>
+					<option value="RO">RO</option>
+					<option value="RR">RR</option>
+					<option value="RS">RS</option>
+					<option value="SC">SC</option>
+					<option value="SE">SE</option>
+					<option value="SP">SP</option>
+					<option value="TO">TO</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="municipionotificacao">Município de notificação</label>
+				<input type="text" name="municipionotificacao" id="municipionotificacao" class="form-control"
+					placeholder="Ex:Rio de Janeiro" value="" onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="nomenotificador">Nome do notificador:</label>
+				<input type="text" name="nomenotificador" id="nomenotificador" class="form-control"
+					placeholder="Ex:Maria Helena Soares" value="" onchange="montarReq(this,false)" />
+			</div>
+		</div>
+
+		<div class="col-6">
+			<div class="form-group">
+				<label for="profocup">Profissão ou ocupação:</label>
+				<input type="text" name="profocup" id="profocup" class="form-control" placeholder="Ex:Engenheiro civil"
+					value="" onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="telefone">Telefone de contato do notificador/unidade notificante:</label>
+				<input type="tel" name="telefone" id="telefone" class="form-control" placeholder="Ex:21987654321"
+					pattern="[0-9]{2}[0-9]{5}[0-9]{4}" value="" onchange="montarReq(this,false)" />
+			</div>
+
+			<div class="form-group">
+				<label for="email">E-mail do notificador/unidade notificadora:</label>
+				<input type="email" name="email" id="email" class="form-control"
+					placeholder="Ex:ricardomarques@gmail.com" value="" onchange="montarReq(this,false)" />
+			</div>
+		</div>
+	</div> <!-- FIM UNID NOTIFICADORA -->
+
+	<br />
+	<br />
+
+	<div class="row">
+		<form method="post" id="form" action="/bubu" value="{}">
+			<div class="form-group">
+				<input type="button" name="submeter" class="btn btn-primary" value="Submeter" onclick="jsonSend()" />
+			</div>
+		</form>
+	</div>
+</div>
+
+
+<script src="/assets/js/form.js"></script>

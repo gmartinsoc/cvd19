@@ -1,0 +1,37 @@
+# Docker-compose.yml
+
+version: '3'
+
+# left      right
+# container:host
+
+# networks:
+#    backend
+
+services:
+    node:
+        build: .
+        container_name: node
+        volumes:
+            - ./assets:/usr/src/app/assets
+            - ./views:/usr/src/app/views
+            - ./src:/usr/src/app/src
+        ports:
+            - "80:3000"
+        links:
+            - mongo
+        networks:
+            - mongo-network
+        
+    mongo:
+        image: mongo
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: MongoDB2019!
+        ports:
+            - "27017:27017"
+        networks:
+            - mongo-network
+networks: 
+    mongo-network:
+        driver: bridge
