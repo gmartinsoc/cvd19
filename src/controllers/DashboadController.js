@@ -1,16 +1,18 @@
-// app.get('/dashboard/data', function (req, res) {
 
-    exports.get = (req, res, next) => {
-        
-        //console.log(req.query.situacao)
-        res.database.find({}, {_id: 0 } ).toArray(function (err, result) {
-            if (err) throw err;
-            for (cont = 0; cont < Object.keys(result).length; cont++) {
-                delete result[cont]._id
-           }
-            res.json(result);
-        });
-    }
+
+// GET /api/dashboard/data
+
+exports.get = (req, res, next) => {
+    
+    //console.log(req.query.situacao)
+    res.database.find({}, {_id: 0 } ).toArray(function (err, result) {
+        if (err) throw err;
+        for (cont = 0; cont < Object.keys(result).length; cont++) {
+            delete result[cont]._id
+        }
+        res.json(result);
+    });
+}
 
 
 
