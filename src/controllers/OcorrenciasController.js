@@ -44,15 +44,18 @@ exports.get = (req, res, next) => {
 
 exports.post = (req, res, next) => {
     try {
-       var obj = req.query.json
-        obj = JSON.parse(obj.toString())
-        obj['coords']="nPreenchido"
+        let ocorrencia = res.ocorrencia
+        
+        ocorrencia['coords']="nPreenchido"
         //pegando coords
-        geocoder.geocode(obj.endereco+","+obj.cep)
+        geocoder.geocode(ocorrencia.endereco +","+ ocorrencia.cep)
                     .then(function(geo) {
-                                obj['coords']=[geo[0].latitude,geo[0].longitude]
+                                if(geo.length !==0) {
+                                    ocorrencia['coords']=[geo[0].latitude,geo[0].longitude]
+                                }
                                 //console.log(obj)
-                                res.database.insertOne(obj)
+                                // TODO: ocorrencia.save()
+                                res.database.insertOne(ocorrencia)
                                 res.send("200")
                         })
                 
