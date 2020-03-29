@@ -11,7 +11,7 @@ const options = {
 const geocoder = NodeGeocoder(options);
 
 
-// app.get('/ocorrencias/data', function (req, res) {
+// GET /api/ocorrencias/data?situacao=??
 
 exports.get = (req, res, next) => {
     // situacao = req.query.situacao
@@ -38,18 +38,24 @@ exports.get = (req, res, next) => {
     });
 }
 
-// app.post('/cadastrar', function (req, res) {
+
+
+// POST /api/cadastrar
+
 exports.post = (req, res, next) => {
     try {
-       var obj = req.query.json
-        obj = JSON.parse(obj.toString())
-        obj['coords']="nPreenchido"
+        let ocorrencia = res.ocorrencia
+        
+        ocorrencia['coords']="nPreenchido"
         //pegando coords
-        geocoder.geocode(obj.endereco+","+obj.cep)
+        geocoder.geocode(ocorrencia.endereco +","+ ocorrencia.cep)
                     .then(function(geo) {
-                                obj['coords']=[geo[0].latitude,geo[0].longitude]
+                                if(geo.length !==0) {
+                                    ocorrencia['coords']=[geo[0].latitude,geo[0].longitude]
+                                }
                                 //console.log(obj)
-                                res.database.insertOne(obj)
+                                // TODO: ocorrencia.save()
+                                res.database.insertOne(ocorrencia)
                                 res.send("200")
                         })
                 
